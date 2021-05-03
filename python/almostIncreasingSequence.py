@@ -79,7 +79,12 @@ print(x)
 # f2 .. [(1, 3), (2, 4), (3, 5), (4, 6)] -> ZIP CHANGES EVERYTHING!
 f2 = sum([1 for a, b in [(1, 3), (2, 4), (3, 5), (4, 6)] if a>=b ]) #<= 1
 print(f2)
- 
+
+# SCRATCH
+[1, 2, 3, 4, 5] # This is what the ZIP does, it PAIRS the offsetted lists up so we can compare a>=b
+[2, 3, 4, 5, 6] # But how does this help us? Why are we doing it? Why does it work? 
+                # Should be simple, but I am STUMPED! THINK WITH A FRESH BRAIN!
+
 # ORIGINAL DATA
 # [1, 2, 3, 4, 5, 6]
 
