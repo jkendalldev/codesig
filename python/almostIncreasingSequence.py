@@ -1,34 +1,24 @@
 #!/usr/local/bin/python3
 
-def almostIncreasingSequence(sequence):
-  isAlmostIncreasing = True 
-  was_not_increased_count = 0
+#def almostIncreasingSequence(sequence):
+    #f1 = sum([1 for a, b in zip(sequence[:-1], sequence[1:]) if a>=b ]) <= 1 
+    #f2 = sum([1 for a, c in zip(sequence[:-2], sequence[2:]) if a>=c ]) <= 1
+    #return f1 and f2
 
-  for count, value in enumerate(sequence):
-    if count > 0:
-      if value <= sequence[count -1]:
-        was_not_increased_count += 1
+# sequence = [1, 2, 3, 4]
 
-  if was_not_increased_count > 1:
-    isAlmostIncreasing = False
-  
-  #print(was_not_increased_count)
-  return isAlmostIncreasing  
+############################## GOOD STUFF
+# x = sum([1 for a, b in [(1, 9), (1, 8)] if a>=b ])  <= 1  # I get what this does now!
+                                                          # It simply sets x to True
+                                                          # IF A is > B only 1 or less times for each
+                                                          # number set iterated through the loop!
+                                                          # It's just a fancy counter really.
 
-#sequence = [10, 1, 2, 3, 4, 5] 
-#sequence = [1, 3, 2]
-#sequence = [1, 2, 1, 2]
-#sequence = [1, 2, 3, 5, 7, 9, 22]
-#sequence = [1, 2, 3, 4, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6]
-# sequence = [1, 2, 5, 3, 5]
-#sequence = [1, 2, 3, 4, 99, 5, 6]
-# sequence = [1, 3, 2, 1]
-
-print(almostIncreasingSequence(sequence))
+############## SO, THE ONLY NEXT THING TO DO IS, UNDERSTAND THE LOGIC BEHIND WHY WE ARE DOING THE ZIP
+# STUFF THE WAY WE ARE DOING IT...
+# zip(sequence[:-1], sequence[1:])
 
 
- 
- 
 
 
 
