@@ -77,13 +77,19 @@ x = list(zip(s[:-2], s[2:]))
 print("f2 data...")
 print(x)
 # f2 .. [(1, 3), (2, 4), (3, 5), (4, 6)] -> ZIP CHANGES EVERYTHING!
-f2 = sum([1 for a, b in [(1, 3), (2, 4), (3, 5), (4, 6)] if a>=b ]) #<= 1
+f2 = sum([1 for a, b in [(7, 3), (9, 4), (9, 5), (9, 6)] if a>=b ]) #<= 1
 print(f2)
 
 # SCRATCH
-[1, 2, 3, 4, 5] # This is what the ZIP does, it PAIRS the offsetted lists up so we can compare a>=b
-[2, 3, 4, 5, 6] # But how does this help us? Why are we doing it? Why does it work? 
+#[1, 2, 3, 4, 5] # This is what the ZIP does, it PAIRS the offsetted lists up so we can compare a>=b
+#[2, 3, 4, 5, 6] # But how does this help us? Why are we doing it? Why does it work? 
                 # Should be simple, but I am STUMPED! THINK WITH A FRESH BRAIN!
+                # IT'S PROB THE SAME DAMN THING AS MY FOR LOOP, THINK ABOUT THAT, IT'S A SIMPLE
+                # OFFSET, AND IT PROB ACCOMPLISHES SAME THING AS JUST LOOKING BACK -1 ELEMENT
+                # IN A LIST IN A FOR LOOP TO SEE IF A>B, I BET THAT'S ALL THIS IS, SIMPLE! YEP, THAT'S
+                # IT! AND IF YOU HIT THE CONDITION 1 TIME OR LESS, YOUR SUM DOES NOT GO TO "1", WHICH
+                # MEANS F1 CAN NOT BE MET, WHICH MEANS YOUR FINAL "F1 AND F2" CONDITION CAN NOT BE MET!
+                # THAT'S WHAT'S GOING ON HERE!
 
 # ORIGINAL DATA
 # [1, 2, 3, 4, 5, 6]
@@ -93,6 +99,14 @@ print(f2)
 
 # F2 BEFORE ZIP: [1, 2, 3, 4] [3, 4, 5, 6]
 # F2 AFTER ZIP:  [(1, 3), (2, 4), (3, 5), (4, 6)]
+
+# SO FIRST COMPARISIONS LOOK LIKE THIS: *Asks, Is the number 1 ahead of me greater than me?
+#[1, 2, 3, 4, 5]  
+#[2, 3, 4, 5, 6]
+
+# SECOND COMPARISONS LOOK LIKE THIS:    *Asks, is the number 2 ahead of me greater than me?
+#[1, 2, 3, 4] 
+#[3, 4, 5, 6]
 
 
 
