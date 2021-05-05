@@ -13,3 +13,4 @@ def matrixElementsSum(floors):
     return rooms_total
 floors = [[10, 0, 10, 0], [1, 5, 0, 1], [2, 1, 3, 10]]
 print(matrixElementsSum(floors))
+
