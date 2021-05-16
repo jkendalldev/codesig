@@ -5,5 +5,8 @@
 # allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
 
 def allLongestStrings(inputArray):
-    
+    size = len(max(inputArray, key=len))
+    return ([word for word in inputArray if len(word) == size])  #Example of list comprehension
 
+inputArray = ["aba", "aaaaaaa", "aaaaaaaaaaa", "vcd", "zzzzzzzzzzz"]
+print(allLongestStrings(inputArray))
