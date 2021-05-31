@@ -1,5 +1,5 @@
 # GoLang Notes
-## _The Last Markdown Editor, Ever_
+## _What a cool language!_
 
 ## Advantages of Golang
 - Code Runs Fast
