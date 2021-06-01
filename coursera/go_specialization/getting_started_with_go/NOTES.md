@@ -138,6 +138,13 @@ your own types (classes).
 
 
 ## Week 2
-- Week 2 Notes
+- How to use, declare data types
+- What functions there are 
+- Pointers
+- Pointer - An address to data in memory
+- 2 main pointer operators..
+- & operator returns the address of a variable/function
+- * operator returns data at an address (dereferencing)
+- 
 
 
