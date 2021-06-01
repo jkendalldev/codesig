@@ -1,3 +1,6 @@
+## Week 1
+- Week 1 Notes
+
 # GoLang Notes
 ## _What a cool language!_
 
@@ -129,5 +132,12 @@ your own types (classes).
 - Can only do this ^ inside a function
 - 
 
-## Variable Initialization
-- 
+## Hello, world! Exercise
+- Submitted
+
+
+
+## Week 2
+- Week 2 Notes
+
+
