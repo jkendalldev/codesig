@@ -39,4 +39,7 @@ your own types (classes).
   - Management of task execution
   - Communication between tasks
   - Synchronization between tasks
-  - 
+  - Go includes concurrency primitives
+  - Goroutines represent concurrent tasks
+  - Channels are used to communicate between tasks
+  - Select enables task synchronization
