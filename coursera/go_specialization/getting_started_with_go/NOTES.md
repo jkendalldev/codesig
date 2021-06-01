@@ -145,6 +145,14 @@ your own types (classes).
 - 2 main pointer operators..
 - & operator returns the address of a variable/function
 - \* operator returns data at an address (dereferencing)
-- 
+- "New" -> Alternate way to create a variable
+- new() function creates a variable and returns a pointer to the variable
+- Variable is initialized to zero
+
+```
+ptr := new(int)
+*ptr = 3
+```
+
 
 
