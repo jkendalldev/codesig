@@ -43,3 +43,36 @@ your own types (classes).
   - Goroutines represent concurrent tasks
   - Channels are used to communicate between tasks
   - Select enables task synchronization
+
+## Workspaces and Packages
+- Workspaces
+- Hierarchy of directories
+- Common organization is good for sharing
+- People can more easily work together
+- Make it easy for people to work with your code
+- Easier to share
+- Workspace (below hierarchy is recommended, not enforced)
+ - src (source code)
+ - pkg (packages, libraries)
+ - bin (executables) 
+ - Programmer typically has one workspace for many projects
+ - Workspace directory defined by GOPATH env variable
+ - Go tools assume your code is in GOPATH
+ - Packages 
+   - Group of related source files
+   - Each package can be imported by other packages
+   - First line of file names the package
+   - package one
+   - package two
+   - import ("one" "two")
+   - Package "Main" .. must have a main package
+   - Building the main package generates an executable
+   - Main package must have main() function
+   
+   package main
+   import "fmt"
+   funct main () {
+       fmt.Printf(hello, world\n")
+   }
+
+   
