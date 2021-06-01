@@ -99,4 +99,35 @@ your own types (classes).
 - Variables must have a name and a type
 
 ``` var x int ```
+- Variable Types
+- examples: integer, floating point, string
+- Floating Point
+- Can have fractional (decimal) values
+- Floating poitn math (may use different hardware)
+- Strings
+- Byte (character) sequences
+- type specifies what data and what operations
+- Can define an alias (alternate name) for a type
+- May improve clarity
+- type Celsius float64 (Celsius is an alias for float64)
+- type IDnum int (again, IDnum is an alias)
+- Can now declar variables using the type alias
+- Ex. var temp Celsius
+- Initialize in the declaration
+- var x int = 100 (here we are specifying the type, no guessing!)
+- var x = 100 (go will infer int type here, we are not being specific)
+- Initialize after the declaration
+- var x int, then x = 100 on next line
+- Uninitialized variables have a zero value
+- var x int // x=0
+- var x string // x=""
+- Short Variable Declaration
+- Can perform a declaration and initialization together 
+- with the := operator
+- x := 100
+- Variable is declared as type of expression on the right hand side
+- Can only do this ^ inside a function
+- 
 
+## Variable Initialization
+- 
