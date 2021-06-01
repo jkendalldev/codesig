@@ -75,4 +75,28 @@ your own types (classes).
        fmt.Printf(hello, world\n")
    }
 
-   
+## Go Tool
+- A tool to manage Go source code
+- Includes some tools
+- "go build" - compiles the program
+- Creates an exe for the main package
+- "go doc" -> shows docs for a package
+- "go fmt" -> formats src code files
+- "go get" -> downloads packages and installs them
+- "go list" -> lists all installed packages
+- "go run" -> compiles .go files and runs the exe
+- "go test" -> runs tests
+- import keyword is used to access other packages
+- Go standard library includes many packages (i.e. fmt)
+- Go Tool finds the packages you tell it to import
+- Searches directories specified by GOROOT and GOPATH
+
+## Variables
+- Naming
+- Case sensitve
+- Don't use keywords
+- Start with a letter
+- Variables must have a name and a type
+
+``` var x int ```
+
