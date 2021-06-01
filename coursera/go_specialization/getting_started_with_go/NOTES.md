@@ -144,7 +144,7 @@ your own types (classes).
 - Pointer - An address to data in memory
 - 2 main pointer operators..
 - & operator returns the address of a variable/function
-- * operator returns data at an address (dereferencing)
+- \* operator returns data at an address (dereferencing)
 - 
 
 
