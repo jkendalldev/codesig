@@ -1,0 +1,123 @@
+& {Set-ExecutionPolicy Bypass -Scope Process -Force; 
+
+$script = ((New-Object System.Net.WebClient).DownloadString('https://dl.signalfx.com/signalfx-agent.ps1')); 
+
+$params = @{access_token = "YOUR_SIGNALFX_API_TOKEN"; 
+ingest_url = "https://ingest.YOUR_SIGNALFX_REALM.signalfx.com"; 
+api_url = "https://api.YOUR_SIGNALFX_REALM.signalfx.com"}; 
+
+Invoke-Command -ScriptBlock ([scriptblock]::Create(”. {$script} $(&{$args} @params)”))}
+
+
+***
+.PARAMETER format
+    (OPTIONAL) Specify the format of the SignalFxAgent package ('msi' or 'zip').  Defaults to 'msi'. .. try it with msi, is msi file
+ALL it pulls down?
+
+
+.\install.ps1 -access_token "ACCESSTOKEN" -format "zip" -agent_version "4.0.0"
+
+### In order to "unify" the build process, WE REALLY NEED TO DECIDE HOW WE WANT TO ACTUALLY INSTALL/DEPLOY THE AGENT TO BOTH
+LINUX AND WINDOWS VMS! -> THIS IS THE REAL QUESTION, BECAUSE IT DICTATES HOW WE INSTALL.
+
+OPTIONS FOR WIN: 1) KEEP USING NUGET PACKAGES WITH CHOCO INSTALL 
+                 2) USE ANSIBLE (APPARENTLY YOU CAN)
+		 3) USE .ZIP FILE (HOW WOULD THIS WORK?)
+
+OPTIONS FOR LIN: 1) KEEP USING RPM PACKAGES, ARE WE USING ANSIBLE TODAY?
+		
+################### DIG THROUGH ANSIBLE
+*DIG THROUGH THE ANSIBLE CODE A BIT...HOW DOES IT WORK? FOR WINDOWS, DOES IT USE A .ZIP FILE? CAN IT? FOR LINUX, DOES IT USE RPMS? CAN IT?
+
+*MAYBE FOR BUILDS WE: -> HAVE A UNIFIED "BUILD" SCRIPT THAT MAKES WIN AND LIN PACKAGES TO PUSH TO ARTY
+*MAYBE FOR INSTALLS / UPGRADES WE: -> RUN ANSIBLE 
+
+*MIKE SAID THE AGENTS "AUTO UPGRADE" THEMSELVES...HOW DOES THAT WORK?
+*HOW DO WE UPDATE OUR OWN CUSTOM CONFIG AND UPDATE EXISTING AGENTS? WE KNOW MIKE HAS A pushconfigevents.ps1 SCRIPT.
+
+
+***JUST READ EVERY SINGLE BIT OF THIS! -> https://github.com/signalfx/signalfx-agent
+
+OBSERVERS: - watch the environments to discover
+running services automatically and configure the agent to send metrics for those services!
+
+Observers discover service endpoints that can then be monitored. They are configured in a list called observers in the main agent config file. These are all of the observers included in the agent along with their possible configuration options:
+
+docker
+ecs
+host
+k8s-api
+k8s-kubelet
+
+*Do our agent config files contain/specify any observers?
+
+-MONITORS:
+
+Monitors collect metrics from the host system and services. 
+They are configured under the monitors list in the agent config. 
+For application-specific monitors, you can define discovery rules in your monitor configuration. 
+A separate monitor instance is created for each discovered instance of applications that 
+match a discovery rule. See Auto Discovery for more information.
+
+
+*Ok so "Monitors" like "collectd-disk" have metrics associated with them like...
+disk_io_time.io_time
+disk_ops.read - The number of disk read operations.
+
+-WRITER: The writer collects metrics emitted by the configured monitors and sends them to SignalFx on a regular basis.
+
+BUNDLES -> PAY ATTENTION, TELLS YOU WHAT ALL PACKAGE FORMS THE AGENT IS AVAIL IN:
+https://github.com/signalfx/signalfx-agent#bundles
+
+-Debian Package (pulls from internet, of course)
+-RPM Package    (pulls from internet, of course)
+-Linux Standalone tar.gz (self contained)
+-Windows Chocolatey Package
+ choco install signalfx-agent [choco options] --params="'/access_token:YOUR_SIGNALFX_ACCESS_TOKEN /ingest_url:https://ingest.YOUR_SIGNALFX_REALM.signalfx.com /api_url:https://api.YOUR_SIGNALFX_REALM.signalfx.com'"
+
+-Windows Standalone .zip
+  https://github.com/signalfx/signalfx-agent/releases
+
+-Windows chocolatey package:
+https://github.com/signalfx/signalfx-agent#windows-chocolatey-package
+
+
+**INTERESTING:
+Installer Script
+For non-containerized environments, there is a convenience script that you can run on your host to install the agent package. 
+This is useful for testing and trials, but for full-scale deployments you will probably want to use a configuration management system 
+like Chef or Puppet.
+
+
+
+################################################################################################
+THIS IS IMPORTANT TO UNDERSTAND: -> READ THIS, THEN READ IT AGAIN!
+https://github.com/signalfx/signalfx-agent/blob/main/docs/config-schema.md
+
+#################################################################################################
+
+
+ANSIBLE: 
+  https://github.com/signalfx/signalfx-agent/tree/main/deployments/ansible
+  https://github.com/signalfx/signalfx-agent/blob/main/deployments/ansible/roles/signalfx-agent/tasks/win_install.yml
+
+IT REALLY SOUNDS LIKE ANSIBLE IS FOR BOTH WIN AND LINUX!!!
+
+(WIN .ZIP) -> SHOULD BE ABLE TO ROLL OUR OWN .ZIP BASED ON VENDORS
+  *** WIN ANSIBLE USES THE .ZIP PACKAGE, NOT CHOCO! -> *WE COULD MAKE OUR OWN ZIP FILES EASILY , ON LINUX/BASH, JUST MAKE SURE WE START
+  WITH A BASE ZIP FROM THE VENDOR!
+
+(LIN YUM) -> SHOULD BE ABLE TO ROLL OUR OWN YUM PACKAGE BASED ON VENDOR'S?
+  *** LIN ANSIBLE USES YUM INSTALL, THAT'S IT.. SO WE COULD POINT THE LIN ANSIBLE TO ARTY WITH OUR OWN YUM PACKAGES IF WE WANTED I GUESS, 
+  WE COULD JUST HAVE AN ARTY MIRROR YUM REPO THAT JUST GOES TO SIGNALFX YUM REPO?
+
+*SO IF WE TAKE THE ANSIBLE APPROACH, CAN WE GET RID OF THE ENTIRE NUGET PACKAGE/POWERSHELL/ CHOCO PARADIGM?
+
+
+
+
+*I AM SO WONDERING, WHY CAN WE NOT JUST USE ANSIBLE?
+
+
+
+

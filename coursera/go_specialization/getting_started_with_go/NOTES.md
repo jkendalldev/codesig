@@ -166,6 +166,8 @@ ptr := new(int)
 - "if", "for", "switch" - all code inside the statements
 - Clause in "switch" or "select" - individual clauses get a block
 - Lexical Scoping
-- 
+
+## Deallocating Memory
+-  
 
 
