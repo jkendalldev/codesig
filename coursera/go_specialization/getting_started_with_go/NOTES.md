@@ -153,6 +153,19 @@ your own types (classes).
 ptr := new(int)
 *ptr = 3
 ```
+## Variable Scope
+- Variable Scope is the places in code where a variable can be accessed
+- Variable scoping controlled by using blocks
+- Block - A sequence of declarations and 
+- statements within matching brackets, {}
+- Hierarch of implicent blocks that do not need {}
+- but they are still a block
+- Universe block - all Go source
+- Package block - all source in a package
+- File block - all source in a file
+- "if", "for", "switch" - all code inside the statements
+- Clause in "switch" or "select" - individual clauses get a block
+- Lexical Scoping
 - 
 
 

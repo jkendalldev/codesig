@@ -17,4 +17,9 @@ func main() {
 
 	y = *ip // y is now 1
 	fmt.Println(y)
+
+	ptr := new(int)
+	fmt.Println(ptr)
+	*ptr = 3
+	fmt.Println(*ptr)
 }
