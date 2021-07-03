@@ -126,7 +126,13 @@ func (mgoLayer *MongoDBLayer) FindEvent(id []byte) (persistence.Event, error) {
 }
 
 // FindEventByName() method - retrieve an event by its name from the MongoDB database..
-
+func (mgoLayer *MongoDBLayer) FindEventByName(name string)(persistence.Event, error){
+	s := mgoLayer.getFreshSession()
+	defer s.Close()
+	e := persistence.Event{}
+	err := s.DB(DB).C(EVENTS).Find(bson.M{"name": name}).One(&e)
+	return e, err
+}
 
 /* MONGO DB SETUP
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
