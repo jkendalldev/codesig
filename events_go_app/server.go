@@ -92,6 +92,31 @@ return &MongoDBLayer{
 }
 
 // Implement the methods of the DatabaseHandler interface..
+// We have 4 methods..
+// AddEvent(Event)
+// FindEvent([]byte)
+// FindEventByName(string)
+// FindAllAvailableEvents()
+
+// AddEvent method gives us a working *.mgo.Session object from the database
+// connection pool to use in our code..
+func (mgoLayer *MongoDBLayer) AddEvent(e persistence.Event) ([]byte,error) {
+	s := mgoLayer.getFreshSession()
+	defer s.Close()  // Ensure this session gets returned back to the mgo database
+	if !e.ID.Valid() {  // connection pool after the AddEvent() method exits.
+		e.ID = bson.NewObjectId()
+	}
+	//let's assume the method below checks if the ID is valid for the location object of the event..
+	if !e.Location.ID.Valid(){
+		e.Location.ID = bson.NewObjectId()
+	}
+	// Return both the event ID of the added event, and an error object
+	// representing the result of the event insertion operation..
+	return []byte(e.ID), s.DB(DB).C(EVENTS).Insert(e) // e is the event object
+}
+
+// FindEvent() method.. Retrieve info of a certain event from the db..
+
 
 
 /* MONGO DB SETUP
