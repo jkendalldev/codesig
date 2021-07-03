@@ -44,6 +44,19 @@ type DatabaseHandler interface {
 	FindAllAvailableEvents() ([]Event, error)
 }
 
+package mongolayer
+import (
+	mgo "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+)
+
+// Create constants to represent the name of our database and the names
+// of our mongodb collections involved in our persistence layer..
+const (
+	DB = "myevents"
+	USERS = "users"
+	EVENTS = "events"
+)
 /* MONGO DB
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
 sudo apt-get install gnupg
@@ -62,9 +75,10 @@ sudo service mongod start
 Now, you can run mongo to reach the database.
 */
 
+// Our Mongodb database:
 // MONGO DB DOCUMENT COLLECTIONS NEEDED FOR OUR EVENTS APP
 // 1. Bookings collection
 // 2. Events collection
 // 3. Users collection
 
-a
+
