@@ -83,7 +83,12 @@ json.NewEncoder(w).Encode(&event)
 }
 // you just wrote an event handler call findEventHandler ^^^
 
-func (eh *eventServiceHandler) allEventHandler(w http.ResponseWriter, r *http.Request)  {}
+// This function will return all the available events in the HTTP response:
+func (eh *eventServiceHandler) allEventHandler(w http.ResponseWriter, r *http.Request)  {
+	
+}
+
+
 func (eh *eventServiceHandler) newEventHandler(w http.ResponseWriter, r *http.Request)  {}
 
 func ServeAPI(endpoint string) error {
