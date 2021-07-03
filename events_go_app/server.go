@@ -134,6 +134,17 @@ func (mgoLayer *MongoDBLayer) FindEventByName(name string)(persistence.Event, er
 	return e, err
 }
 
+// FindAllAvailableEvents() method..
+// returns all available events in our db, i.e. returns entire events collection..
+func (mgoLayer *MongoDBLayer) FindAllAvailableEvents() ([]persistence.Event, error){
+  s := mgoLayer.getFreshSession()
+  defer s.Close()
+  events := []persistence.Event{}
+  err := s.DB(DB).C(EVENTS).Find(nil).All(&events)
+  return events, err
+}
+
+
 /* MONGO DB SETUP
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
 sudo apt-get install gnupg
