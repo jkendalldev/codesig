@@ -37,6 +37,7 @@ func ServeAPI(endpoint string) error {
 	return http.ListenAndServe(endpoint, r)
 }
 
+// Persistence layer
 type DatabaseHandler interface {
 	AddEvent(Event) ([]byte, error)
 	FindEvent([]byte) (Event, error)
@@ -44,12 +45,14 @@ type DatabaseHandler interface {
 	FindAllAvailableEvents() ([]Event, error)
 }
 
+// Persistence layer
 package mongolayer
 import (
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
+// Persistence layer
 // Create constants to represent the name of our database and the names
 // of our mongodb collections involved in our persistence layer..
 const (
@@ -58,12 +61,14 @@ const (
 	EVENTS = "events"
 )
 
+// Persistence layer
 // Database session object type *mgo.session
 // Wrap the *mgo.session type in a struct type called MongoDBLayer..
 type MongoDBLayer struct {
 	session *mgo.Session
 }
 
+// Persistence layer
 // Implement the DatabaseHandler interface to construct the concrete persistence
 // layer..
 // Make the implementor object type of the DatabaseHandler interface
@@ -144,7 +149,7 @@ func (mgoLayer *MongoDBLayer) FindAllAvailableEvents() ([]persistence.Event, err
   return events, err
 }
 
-
+// Persistence layer
 /* MONGO DB SETUP
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
 sudo apt-get install gnupg
