@@ -174,4 +174,5 @@ Now, you can run mongo to reach the database.
 // 2. Events collection
 // 3. Users collection
 
+// Implementing our Restful APIs handler functions..
 
