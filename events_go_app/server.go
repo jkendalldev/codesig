@@ -57,6 +57,9 @@ func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.R
 			to search by name via /name/coldplayconcert}`)
 		return
 	}
+
+	// Extract the information from the database based on the provided request
+	// URL variables; here's how..
 	var event persistence.Event
 	var err error
 	switch strings.ToLower(criteria) {
@@ -72,7 +75,9 @@ if err != nil {
 	fmt.Fprintf(w, "{error %s", err)
 	return 
 }
+// Convert response to a JSON format
 w.Header().Set("Content-Type", "application/json;charset=utf8")
+// Convert results from our db calls to the JSON format:
 json.NewEncoder(w).Encode(&event)
 
 }
