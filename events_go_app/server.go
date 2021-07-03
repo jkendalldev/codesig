@@ -15,9 +15,40 @@
 
 import "github.com/gorilla/mux"
 
-type eventServiceHandler struct{}
+type eventServiceHandler struct{
+	dbhandler persistence.DatabaseHandler
+}
 
-func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.Request) {}
+func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	criteria, ok := vars["searchcriteria"]
+	if !ok {
+		w.WriteHeader(400)
+		fmt.Fprint(w, `{error: No search criteria found, you can either search by id via /id/ 4
+			to search by name via /name/coldplayconcert}`)
+		return 
+	}
+	var event persistence.Event
+	var err error
+	switch strings.ToLower(criteria) {
+	case "name":
+	event, err = eh.dbhandler.FindEventByName(searchkey)
+	case "id":
+	id, err := hex.DecodeString(searchkey)
+	if err == nil {
+		event, err = eh.dbhandler.FindEvent(id)
+	}
+	}
+if err != nil {
+	fmt.Fprintf(w, "{error %s", err)
+	return 
+}
+w.Header().Set("Content-Type", "application/json;charset=utf8")
+json.NewEncoder(w).Encode(&event)
+
+}
+// you just wrote an event handler call findEventHandler ^^^
+
 func (eh *eventServiceHandler) allEventHandler(w http.ResponseWriter, r *http.Request)  {}
 func (eh *eventServiceHandler) newEventHandler(w http.ResponseWriter, r *http.Request)  {}
 
@@ -174,5 +205,7 @@ Now, you can run mongo to reach the database.
 // 2. Events collection
 // 3. Users collection
 
+// Restful API handlers
 // Implementing our Restful APIs handler functions..
+
 
