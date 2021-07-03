@@ -49,16 +49,24 @@ func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.R
 			to search by name via /name/coldplayconcert}`)
 		return 
 	}
+
+	searchkey, ok := vars["search"]
+	if !ok {
+		w.WriteHeader(400)
+		fm.Fprint(w, `{error: No search keys found, you can either search by id via /id/4
+			to search by name via /name/coldplayconcert}`)
+		return
+	}
 	var event persistence.Event
 	var err error
 	switch strings.ToLower(criteria) {
-	case "name":
-	event, err = eh.dbhandler.FindEventByName(searchkey)
-	case "id":
-	id, err := hex.DecodeString(searchkey)
-	if err == nil {
-		event, err = eh.dbhandler.FindEvent(id)
-	}
+		case "name":
+		event, err = eh.dbhandler.FindEventByName(searchkey)
+		case "id":
+		id, err := hex.DecodeString(searchkey)
+		if err == nil {
+			event, err = eh.dbhandler.FindEvent(id)
+		}
 	}
 if err != nil {
 	fmt.Fprintf(w, "{error %s", err)
