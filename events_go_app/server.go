@@ -116,7 +116,16 @@ func (mgoLayer *MongoDBLayer) AddEvent(e persistence.Event) ([]byte,error) {
 }
 
 // FindEvent() method.. Retrieve info of a certain event from the db..
+func (mgoLayer *MongoDBLayer) FindEvent(id []byte) (persistence.Event, error) {
+	s := mgoLayer.getFreshSession()
+	defer s.Close()
+	e := persistence.Event{} // Create an empty event object
+	err := s.DB(DB).C(EVENTS).FindId(bson.ObjectId(id)).One(&e) // access events collection
+	                                                            // in the MongoDB.
+	return e, err
+}
 
+// FindEventByName() method - retrieve an event by its name from the MongoDB database..
 
 
 /* MONGO DB SETUP
