@@ -19,6 +19,14 @@ type eventServiceHandler struct{
 	dbhandler persistence.DatabaseHandler
 }
 
+// Constructor to initialize an eventServiceHandler object..
+func newEventHandler (databaseHandler persistence.DatabaseHandler) *eventServiceHandler  {
+	return &eventServiceHandler{
+		dbhandler: databaseHandler,
+	}
+	
+}
+
 func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	criteria, ok := vars["searchcriteria"]
