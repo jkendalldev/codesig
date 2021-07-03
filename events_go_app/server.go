@@ -23,9 +23,9 @@ type eventServiceHandler struct{
 func newEventHandler (databaseHandler persistence.DatabaseHandler) *eventServiceHandler  {
 	return &eventServiceHandler{
 		dbhandler: databaseHandler,
-	}
-	
+	}	
 }
+
 
 func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
