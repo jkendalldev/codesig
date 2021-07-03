@@ -41,7 +41,9 @@ func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.R
 										   // called SearchCritera in our vars map.
 										   // If it is false, then we know that the
 										   // request URL we received is not valid.
-	if !ok {
+	if !ok {       // Check to see if we retrieved the SearchCritera, if not error and exit
+		           // Note the 400 below is actually returning JSON formatted error message,
+				   // since this is a standard with REST services..
 		w.WriteHeader(400)
 		fmt.Fprint(w, `{error: No search criteria found, you can either search by id via /id/ 4
 			to search by name via /name/coldplayconcert}`)
