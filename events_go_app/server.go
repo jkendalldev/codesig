@@ -28,8 +28,19 @@ func newEventHandler (databaseHandler persistence.DatabaseHandler) *eventService
 
 
 func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	criteria, ok := vars["searchcriteria"]
+	vars := mux.Vars(r) // Returns a map of keys and values representing our request
+	                    // URL variables and their values.
+						// Resulting value is stored in the vars variable
+						// first k/v pair: "SearchCriteria:name"
+						// second k/v pair: "search"jazz concert"
+	criteria, ok := vars["SearchCriteria"] // criteria variable will now have either
+	                                       // name or id if the user sent the correct
+										   // request URL. 
+										   // The "ok" variable is type boolean, 
+										   // if ok is true, then we will find a key
+										   // called SearchCritera in our vars map.
+										   // If it is false, then we know that the
+										   // request URL we received is not valid.
 	if !ok {
 		w.WriteHeader(400)
 		fmt.Fprint(w, `{error: No search criteria found, you can either search by id via /id/ 4
@@ -66,6 +77,9 @@ func ServeAPI(endpoint string) error {
 	// Create a subrouter for URLs prefixed with /events...
 	eventsrouter := r.PathPrefix("/events").Subrouter()
 	// Task - Searching for events via ID and name:
+	// Define path and link to handler..
+	// SearchCriteria and search are to variables in our path..
+	// SearchCriteria can be replaced with id or name..
 	eventsrouter.Methods("GET").Path("/{SearchCritera}/{search}").HandlerFunc(handler.findEventHandler)
 	// Task - Retrieving all events at one - Relative URL is /events, method is GET, no data
 	// expected in the HTTP body:
