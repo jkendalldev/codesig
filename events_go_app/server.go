@@ -37,8 +37,34 @@ func ServeAPI(endpoint string) error {
 	return http.ListenAndServe(endpoint, r)
 }
 
+type DatabaseHandler interface {
+	AddEvent(Event) ([]byte, error)
+	FindEvent([]byte) (Event, error)
+	FindEventByName(string) (Event, error)
+	FindAllAvailableEvents() ([]Event, error)
+}
 
+/* MONGO DB
+wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+sudo apt-get install gnupg
+wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
 
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+sudo nano /etc/init.d/mongod
 
+#give permissions
+sudo chmod +x /etc/init.d/mongod
 
+#start the service
+sudo service mongod start
+Now, you can run mongo to reach the database.
+*/
 
+// MONGO DB DOCUMENT COLLECTIONS NEEDED FOR OUR EVENTS APP
+// 1. Bookings collection
+// 2. Events collection
+// 3. Users collection
+
+a
