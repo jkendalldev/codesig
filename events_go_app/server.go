@@ -57,7 +57,44 @@ const (
 	USERS = "users"
 	EVENTS = "events"
 )
-/* MONGO DB
+
+// Database session object type *mgo.session
+// Wrap the *mgo.session type in a struct type called MongoDBLayer..
+type MongoDBLayer struct {
+	session *mgo.Session
+}
+
+// Implement the DatabaseHandler interface to construct the concrete persistence
+// layer..
+// Make the implementor object type of the DatabaseHandler interface
+// be a pointer to a MongoDBLayer struct object, or just simploy *MongoDBLayer..
+
+// Create a constructor function called NewMongoDBLayer, which requires
+// a single argument of type string..
+// The argument represents the connection string with the information needed to
+// establish the connection to the MongoDB database.
+// Constructor function called NewMongoDBLayer
+
+// Note, format of connection string needs to look like this..
+// [mongodb://][user:pass@host1[:port1][,host2[:port2][/database][?options]
+// or..
+// mongodb://127.0.0.1
+// port defaults to 27017
+// Constructor function called NewMongoDBLayer
+func NewMongoDBLayer(connection string) (*MongoDBLayer, error) { 
+s, err:= mgo.Dial(connection) // mgo.Dial is the function in the mgo package
+ if err!= nil{                // which will return a MongoDB connection session
+	 return nil, err          // mgo.Dial(connection) returns a *mgo.Session object and
+ }                            // an error object
+return &MongoDBLayer{
+	session: s,
+},err
+}
+
+// Implement the methods of the DatabaseHandler interface..
+
+
+/* MONGO DB SETUP
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
 sudo apt-get install gnupg
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
