@@ -1,3 +1,21 @@
+// main package
+// makes use of the flag package to take the location of the configuration file
+// from the user and then use the configuration file to initialize the db connection
+// and the HTTP server.
+package main 
+import "flag"
+
+func main(){
+	confPath := flag.String("conf", `.\configuration\config.json`, "flag to set the path to the config json file")
+    flag.Parse()
+	// extract configuration
+	config,_:= configuration.ExtractConfiguration(*confPath)
+	fmt.Println("Connecting to database")
+	dbhandler,_:=dblayer.NewPersistenceLayer(config.Databasetype, config.DBConnection)
+	// RESTful API start
+	log.Fatal(rest.ServeAPI(config.RestfulEndpoint, dbhandler, eventEmitter))
+}
+
 // Services
 // Web UI
 // Search
@@ -190,7 +208,11 @@ const (
     DYNAMODB DBTYPE = "dynamodb"
 )
 func NewPersistenceLayer(options DBTYPE, connection string) (persistence.DatabaseHandler, error) {
-	
+	switch options {
+	case MONGODB:
+		return mongolayer.NewMongoDBLayer(connection)
+	}
+	return nil, nil
 }
 
 // Persistence layer..
