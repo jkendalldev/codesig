@@ -179,6 +179,19 @@ func ExtractConfiguration(filename string) (ServiceConfig, error){
 // A factory function will manufacture our db handler..
 // takes name of the db we want to connect to and the connection string, and returns
 // a db handler object which we can use for db related tasks from this point forward..
+package dblayer
+import (
+	"gocloudprogramming/chapter2/myevents/src/lib/persistence"
+	"gocloudprogramming/chapter2/myevents/src/lib/persistence/mongolayer"
+)
+type DBTYPE string
+const (
+	MONGODB DBTYPE = "mongodb"
+    DYNAMODB DBTYPE = "dynamodb"
+)
+func NewPersistenceLayer(options DBTYPE, connection string) (persistence.DatabaseHandler, error) {
+	
+}
 
 // Persistence layer..
 type DatabaseHandler interface {
