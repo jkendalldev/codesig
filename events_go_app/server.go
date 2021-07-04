@@ -124,8 +124,9 @@ func (eh *eventServiceHandler) newEventHandler(w http.ResponseWriter, r *http.Re
 	}
 }
 
-func ServeAPI(endpoint string) error {
-	handler := &eventservicehandler{}
+func ServeAPI(endpoint string, dbHandler persistence.DataHandler) error {
+	// handler := &eventservicehandler{}
+	handler := newEventHandler(dbHandler)
 	r := mux.NewRouter()
 	// Create a subrouter for URLs prefixed with /events...
 	eventsrouter := r.PathPrefix("/events").Subrouter()
@@ -142,6 +143,10 @@ func ServeAPI(endpoint string) error {
 	eventsrouter.Methods("POST").Path("").HandlerFunc(handler.newEventHandler)
 	return http.ListenAndServe(endpoint, r)
 }
+
+// Allow the ServiceAPI() function (which defines the HTTP routes and handlers), to call
+// the eventServiceHandler constructor..
+
 
 // Persistence layer
 type DatabaseHandler interface {
