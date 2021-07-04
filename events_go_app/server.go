@@ -173,6 +173,12 @@ func ExtractConfiguration(filename string) (ServiceConfig, error){
 	return conf,err 
 }
 
+// Build a database layer package that acts as the gateway to the persistence layer in our
+// microservice. The package will utilize the factory design pattern by implementing
+// a factory function..
+// A factory function will manufacture our db handler..
+// takes name of the db we want to connect to and the connection string, and returns
+// a db handler object which we can use for db related tasks from this point forward..
 
 // Persistence layer..
 type DatabaseHandler interface {
