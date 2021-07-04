@@ -124,6 +124,8 @@ func (eh *eventServiceHandler) newEventHandler(w http.ResponseWriter, r *http.Re
 	}
 }
 
+// Allow the ServiceAPI() function (which defines the HTTP routes and handlers), to call
+// the eventServiceHandler constructor..
 func ServeAPI(endpoint string, dbHandler persistence.DataHandler) error {
 	// handler := &eventservicehandler{}
 	handler := newEventHandler(dbHandler)
@@ -143,9 +145,6 @@ func ServeAPI(endpoint string, dbHandler persistence.DataHandler) error {
 	eventsrouter.Methods("POST").Path("").HandlerFunc(handler.newEventHandler)
 	return http.ListenAndServe(endpoint, r)
 }
-
-// Allow the ServiceAPI() function (which defines the HTTP routes and handlers), to call
-// the eventServiceHandler constructor..
 
 
 // Persistence layer
