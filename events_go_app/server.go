@@ -102,8 +102,12 @@ func (eh *eventServiceHandler) allEventHandler(w http.ResponseWriter, r *http.Re
 // Adds a new event to our database using the data retrieved from incomming HTTP requests..
 // 
 func (eh *eventServiceHandler) newEventHandler(w http.ResponseWriter, r *http.Request)  {
-	event := persistence.Event{}
-	err := json.NewDecoder(r.Body).Decode(&Event)
+	event := persistence.Event{} // Create a new object of persistence.Event type , this
+	                             // object will hold the data we are expecting to parse out
+								// from the incomming HTTP request.
+	err := json.NewDecoder(r.Body).Decode(&event) // Take body of incomming HTTP request and
+	                                              // decode JSON data embedded in it and feed it
+										          // to the new event object 
 	if err != nil {
 		w.WriteHeader(500)
 		fmt.Fprintf(w, "{error: error occured while decoding event data %s}", err)
